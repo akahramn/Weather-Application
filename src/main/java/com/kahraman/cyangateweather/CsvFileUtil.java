@@ -7,7 +7,7 @@ import java.io.File;
  * @author Abdullah Kahraman
  */
 public class CsvFileUtil {
-    private final File csvFile = new File("src/main/resources/repo/newSampleUser.csv");
+    private final File csvFile = new File("src/main/resources/repo/weatherResult.csv");
 
     /**
      * Check .csv file is exist or not from the directory,
