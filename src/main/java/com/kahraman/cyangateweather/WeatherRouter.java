@@ -26,26 +26,25 @@ public class WeatherRouter extends RouteBuilder {
     public void configure() throws Exception {
         from("scheduler://foo?repeatCount=1")
                 .routeId("csvFileNotExist")
-                .to("weather:deneme?location=Manisa,Turkey&appid={{weatherAppId}}&units=METRIC")
+                .to("weather:deneme?location={{cityName}},{{countryName}}&appid={{weatherAppId}}&units=METRIC")
                 .setHeader("isFileExist", method(CsvFileUtil.class))
                 .choice()
                     .when(header("isFileExist").isEqualTo(false))
                         .process(new WeatherBindingData())
                         .marshal().bindy(BindyType.Csv, WeatherResultModel.class)
-                        .to("file:src/main/resources/repo?fileName=newSampleUser.csv")
+                        .to("file:src/main/resources/repo?fileName=weatherResult.csv")
                 .end();
 
-        //cron:tab?schedule=1/10+*+*+*+*+?
         from("cron:tab?schedule=0+*+*+*+?")
                 .routeId("csvFileExist")
-                .to("weather:deneme?location=Manisa,Turkey&appid={{weatherAppId}}&units=METRIC")
+                .to("weather:deneme?location={{cityName}},{{countryName}}&appid={{weatherAppId}}&units=METRIC")
                 .setHeader("isFileExist", method(CsvFileUtil.class))
                 .choice()
                     .when(header("isFileExist").isEqualTo(true))
                         .process(new WeatherBindingData())
                         .marshal().bindy(BindyType.Csv, WeatherResultModel.class)
                         .process(new CsvProcessor())
-                        .to("file:src/main/resources/repo?fileName=newSampleUser.csv&fileExist=Append")
+                        .to("file:src/main/resources/repo?fileName=weatherResult.csv&fileExist=Append")
                         .log("Successfully created")
                 .end();
     }
