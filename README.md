@@ -1,5 +1,5 @@
 
-# CyanGate Weather
+# Weather Application 
 
 This project takes the current weather data every hour and writes it to the csv file.
 
