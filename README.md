@@ -6,7 +6,7 @@ This project takes the current weather data every hour and writes it to the csv 
 
 ## Installation
 
-Install CyanGate Wather project with maven
+Install Wather Application project with maven
 
 ```bash
   git clone https://github.com/akahramn/CyanGate-Weather.git
